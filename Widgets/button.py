@@ -21,12 +21,12 @@ class Button(Widget):
         super().__init__(app, master, events, width, height, x, y, anchor)
         self.text = text
         self.command = command
-
-        self.default_surface = surface_blur(self.back_surface, 5, 0.9)
-        self.hover_surface = surface_blur(self.back_surface, 10, 0.85)
-        
+        self.cache()
         self.on_leave()
 
+    def cache(self):
+        self.default_surface = surface_blur(self.back_surface, 5, 0.85)
+        self.hover_surface = surface_blur(self.back_surface, 10, 0.75)
 
     def on_enter(self):
         self.update(surface=self.hover_surface)

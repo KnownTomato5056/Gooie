@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ProjectTarget>
+    <TargetProject>11c79d8a-6845-4bc4-b518-c076700388ee</TargetProject>
+    <FriendlyName>Gooie</FriendlyName>
+  </ProjectTarget>
+  <Reports>
+    <Report>
+      <Filename>C:\Users\anony\AppData\Local\Temp\Performance_20231020.vsp</Filename>
+    </Report>
+    <Report>
+      <Filename>C:\Users\anony\AppData\Local\Temp\Performance_20231020(1).vsp</Filename>
+    </Report>
+    <Report>
+      <Filename>C:\Users\anony\AppData\Local\Temp\Performance_20231020(2).vsp</Filename>
+    </Report>
+  </Reports>
+  <UseVTune>false</UseVTune>
+</ProfilingTarget>

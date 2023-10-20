@@ -1,21 +1,20 @@
-from re import S
 from pygame.rect import Rect
 from pygame.surface import Surface
 
 
 class Widget:
-    def __init__(self, app, master, events, width, height, x, y, anchor):
+    def __init__(self, app, master, events, width, height, dx, dy, anchor):
         self.app = app
         self.master = master
         self.events = events
 
-        self.x, self.y = 0, 0
-        self.place(x, y, anchor)
-
+        self.dx, self.dy = dx, dy
+        
+        self.x, self.y, self.anchor, self.rect = 0, 0, anchor, None
         self.width, self.height = width, height
+        self.place(dx, dy, anchor)
 
         self.active = True
-        self.rect = Rect(self.x, self.y, self.width, self.height)
         self.default_surface = Surface((width, height))
         self.back_surface = self.get_back_surface()
 
@@ -40,6 +39,15 @@ class Widget:
         elif anchor == 4 or anchor == 'bottom_left':
             self.x = x
             self.y = self.app.height - y
+            
+        self.rect = Rect(self.x, self.y, self.width, self.height)
+            
+    def reindent(self):
+        self.place(self.dx, self.dy, self.anchor)
+        self.default_surface = Surface((self.width, self.height))
+        self.back_surface = self.get_back_surface()
+        self.cache()
+        self.master.blit(self.default_surface, self.rect)
 
     def update(self, rect=None, surface=None):
         if not rect: rect = self.rect
