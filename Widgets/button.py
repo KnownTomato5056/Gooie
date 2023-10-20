@@ -1,4 +1,6 @@
+from pygame import surface
 from Classes.widgets import Widget
+from Classes.image import surface_blur
 
 
 class Button(Widget):
@@ -12,22 +14,28 @@ class Button(Widget):
         x: int = 0,
         y: int = 0,
         anchor: str = 1,
-        enter_color: str = 2,
-
-        events: set = {'enter', 'leave', 'left_button_down',
-                       'left_button_up'}):
+        command = None,
+        events: set = {'enter', 'leave', 'left_button_down', 'left_button_up'},
+        ):
 
         super().__init__(app, master, events, width, height, x, y, anchor)
         self.text = text
+        self.command = command
+
+        self.default_surface = surface_blur(self.back_surface, 5, 0.9)
+        self.hover_surface = surface_blur(self.back_surface, 10, 0.85)
+        
+        self.on_leave()
+
 
     def on_enter(self):
-        print('enter')
+        self.update(surface=self.hover_surface)
 
     def on_leave(self):
-        print('leave')
+        self.update(surface=self.default_surface)
 
     def on_left_button_down(self):
         print('click')
 
     def on_left_button_up(self):
-        print('lift')
+        if self.command: self.command()

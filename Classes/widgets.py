@@ -1,3 +1,4 @@
+from re import S
 from pygame.rect import Rect
 from pygame.surface import Surface
 
@@ -15,13 +16,16 @@ class Widget:
 
         self.active = True
         self.rect = Rect(self.x, self.y, self.width, self.height)
-        self.surface = Surface((width, height))
-
-        self.surface.set_alpha(30)
-        
+        self.default_surface = Surface((width, height))
+        self.back_surface = self.get_back_surface()
 
         self.app.widgets.add(self)
-        self.update()
+
+    def get_back_surface(self):
+        if type(self.master) == Surface:
+            return self.master.subsurface(self.rect).copy()
+        else:
+            return self.master.surface.subsurface(self.rect).copy()
 
     def place(self, x, y, anchor=1):
         if anchor == 1 or anchor == 'top_left':
@@ -37,10 +41,12 @@ class Widget:
             self.x = x
             self.y = self.app.height - y
 
-    def update(self, rect=None):
+    def update(self, rect=None, surface=None):
         if not rect: rect = self.rect
-        self.master.blit(self.surface, self.rect)
+        if not surface: surface = self.default_surface
+        
+        self.master.blit(surface, rect)
         if type(self.master) == Surface:
-            self.app.update_list.append(self.rect)
+            self.app.update_list.append(rect)
         else:
             self.master.update(rect)

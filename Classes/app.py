@@ -1,8 +1,9 @@
 from Classes.image import convert_img
 from Classes.eventhandler import EventHandler
 from Widgets.button import Button
-from pygame import init, display, event, NOFRAME
+from pygame import init, display, event, quit, NOFRAME
 from pygame.time import Clock
+from sys import exit
 
 
 
@@ -11,7 +12,7 @@ class App:
     def __init__(self,
                  size: tuple[int, int] = (700, 700),
                  fps: int = 60,
-                 bg_img_path: str = r'Assets/Backgrounds/bg1.jpg',
+                 bg_img_path: str = r'Assets/Backgrounds/bg2.jpg',
                  buttons: bool = True
         ):
 
@@ -34,7 +35,7 @@ class App:
 
 
     def add_buttons(self):
-        close_btn = Button(self, self.screen, width=50, height=30, x=50, y=0, anchor=2)
+        close_btn = Button(self, self.screen, width=50, height=40, x=50, y=0, anchor=2, command=lambda: quit())
         self.widgets.add(close_btn)
 
     def update(self):
