@@ -80,6 +80,8 @@ class EventHandler:
     def handle(self, events: list):
         for event in events:
             if event.type == 1024: handle_mouse_movement_events(event)
-            try:
-                for widget in cache[event.type]: event_pipeline(widget, event)
-            except: pass
+            elif event.type == 32782: self.app.restore()
+            else:
+                try:
+                    for widget in cache[event.type]: event_pipeline(widget, event)
+                except: print(event)

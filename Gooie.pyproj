@@ -29,6 +29,7 @@
     <Compile Include="Classes\widgets.py" />
     <Compile Include="Gooie.py" />
     <Compile Include="Widgets\button.py" />
+    <Compile Include="Widgets\frame.py" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
