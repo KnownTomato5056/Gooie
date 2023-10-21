@@ -13,10 +13,11 @@ class Button(Widget):
         y: int = 0,
         anchor: str = 1,
         command = None,
+        resizeable = False,
         events: set = {'enter', 'leave', 'left_button_up'},
         ):
 
-        super().__init__(app, master, events, width, height, x, y, anchor)
+        super().__init__(app, master, events, width, height, x, y, anchor, resizeable)
         self.command = command
         self.init_surfaces()
         self.update(surface=self.default_surface)

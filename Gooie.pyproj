@@ -28,6 +28,7 @@
     <Compile Include="Classes\memory.py" />
     <Compile Include="Classes\widgets.py" />
     <Compile Include="Gooie.py" />
+    <Compile Include="Math\image_math.py" />
     <Compile Include="Widgets\button.py" />
     <Compile Include="Widgets\frame.py" />
   </ItemGroup>
@@ -46,7 +47,12 @@
     <Folder Include="Assets\Backgrounds\" />
     <Folder Include="Classes\" />
     <Folder Include="Assets\" />
+    <Folder Include="Math\" />
     <Folder Include="Widgets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Backgrounds\bg1.jpg" />
+    <Content Include="Assets\Backgrounds\bg2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
