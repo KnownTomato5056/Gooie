@@ -3,16 +3,18 @@ cache = {
     1024: set(),
     1025: set(),
     1026: set(),
+    100: set()
 }
 
 eid = {
-    'quit': 256,
-    'left_button_down': 1025,
-    'right_button_down': 1025,
-    'left_button_up': 1026,
-    'right_button_up': 1026,
-    'enter': 1024,
-    'leave': 1024,
+    'quit': {256},
+    'left_button_down': {1025},
+    'right_button_down': {1025},
+    'left_button_up': {1026},
+    'right_button_up': {1026},
+    'enter': {1024},
+    'leave': {1024},
+    'drag': {1024, 1025, 1026}
 }
 
 widget_in_focus = None
@@ -24,8 +26,8 @@ def collides(pos, widget):
 
 def event_id_translate(event_set: set) -> set:
     translated = set()
-    for event in event_set: 
-        translated.add(eid[event])
+    for event in event_set:
+        translated.update(eid[event])
     return translated
 
 
@@ -35,9 +37,20 @@ def cache_events(widgets: list) -> dict:
             cache[eid].add(widget)
 
 
+def handle_drag(event):
+    for widget in cache[1024].intersection(cache[1025]):
+        if widget.drag:
+            widget.on_drag(event)
+
+
 def handle_mouse_movement_events(event):
+    if event.dict['buttons'][0]:
+        handle_drag(event)
+        return
+
     global widget_in_focus
-    for widget in cache[1026]:
+
+    for widget in cache[1024]:
         if collides(event.dict['pos'], widget):
             if not widget_in_focus:
                 widget_in_focus = widget
@@ -55,19 +68,35 @@ def handle_mouse_movement_events(event):
         widget_in_focus = None
 
 
+
 def event_pipeline(widget, event):
     if not widget.active: return
     if event.type == 1025:
         if not collides(event.dict['pos'], widget): return
         btn = event.dict['button']
-        if btn == 1 and 'left_button_down' in widget.events: widget.on_left_button_down()
-        elif btn == 3 and 'right_button_down' in widget.events: widget.on_right_button_down()
+
+        if btn == 1 and 'left_button_down' in widget.events:
+            widget.on_left_button_down()
+
+        elif btn == 3 and 'right_button_down' in widget.events:
+            widget.on_right_button_down()
+
+        widget.drag = True
+        widget.drag_pos = event.dict['pos']
 
     elif event.type == 1026:
         if not collides(event.dict['pos'], widget): return
         btn = event.dict['button']
-        if btn == 1 and 'left_button_up' in widget.events: widget.on_left_button_up()
-        elif btn == 3 and 'right_button_up' in widget.events: widget.on_right_button_up()
+
+        if btn == 1 and 'left_button_up' in widget.events:
+            widget.on_left_button_up()
+            widget.drag = False
+
+        elif btn == 3 and 'right_button_up' in widget.events:
+            widget.on_right_button_up()
+
+        widget.drag = False
+        widget.drag_pos = event.dict['pos']
 
 
 class EventHandler:
@@ -84,4 +113,4 @@ class EventHandler:
             else:
                 try:
                     for widget in cache[event.type]: event_pipeline(widget, event)
-                except: print(event)
+                except: pass

@@ -20,14 +20,14 @@ class App:
     def __init__(self,
                  size: tuple[int, int] = (700, 700),
                  fps: int = 60,
-                 bg_img_path: str = r'Assets/Backgrounds/bg2.jpg',
+                 bg_img_path: str = r'Assets/Backgrounds/bg1.jpg',
         ):
 
         init()
         self.size = size
         self.width, self.height = self.size
         self.screen = display.set_mode(size, NOFRAME)
-        
+
         self.clock = Clock()
         self.fps = fps
         self.desktop_size = get_monitor_size()
@@ -52,7 +52,20 @@ class App:
         min_btn = Button(self, self.screen, width=50, height=40, x=150, y=0, anchor=2, command=self.minimize)
 
     def add_title_bar(self):
-        title_bar = Frame(self, self.screen, width=lambda: self.width-150, height=lambda: 40, x=0, y=0, anchor=1, resizeable=True)
+
+        class TitleBar(Frame):
+
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+
+            def on_drag(self, event):
+                pos = event.dict['pos']
+                pos2 = self.app.window.position
+                self.app.window.position = pos[0] + pos2[0] - self.drag_pos[0], pos[1] + pos2[1] -self.drag_pos[1]
+
+        title_bar = TitleBar(
+            self, self.screen, width=lambda: self.width-150, height=lambda: 40, x=0, y=0, anchor=1, resizeable=True, events={'drag'}
+        )
 
     def win_max_min(self):
         print(self.size, self.desktop_size)
