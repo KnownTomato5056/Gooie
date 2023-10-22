@@ -31,3 +31,9 @@ def surface_blur(surface, radius=5, darken=1):
 
 def np_blur(surface, radius=5, darken=1):
     size = surface.shape[:2]
+
+
+def blit_center(master, surface):
+    coord = master.get_width() / 2, master.get_height() / 2
+    rect = surface.get_rect(center=coord)
+    master.blit(surface, rect)

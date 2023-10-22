@@ -1,6 +1,5 @@
 from Classes.widgets import Widget
 from Classes.image import surface_blur
-from Math.image_math import add_corners
 
 
 class Frame(Widget):
@@ -23,3 +22,6 @@ class Frame(Widget):
 
     def init_surfaces(self):
         self.default_surface = surface_blur(self.background_surface, radius=20, darken=0.7)
+        
+    def place():
+        pass

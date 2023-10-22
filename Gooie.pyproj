@@ -31,6 +31,7 @@
     <Compile Include="Math\image_math.py" />
     <Compile Include="Widgets\button.py" />
     <Compile Include="Widgets\frame.py" />
+    <Compile Include="Widgets\titlebar.py" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

@@ -1,13 +1,17 @@
 from Classes.image import convert_img
 from Classes.eventhandler import EventHandler
 from Widgets.button import Button
-from Widgets.frame import Frame
-from Math.image_math import add_corners
-from pygame import RESIZABLE, init, display, event, quit, NOFRAME
+from Widgets.titlebar import TitleBar
+from pygame import init, display, event, quit, NOFRAME
 from pygame.time import Clock
 from pygame._sdl2.video import Window
 from win32api import GetMonitorInfo, MonitorFromPoint
 
+
+"""
+Icons by:
+icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+"""
 
 
 def get_monitor_size():
@@ -20,7 +24,7 @@ class App:
     def __init__(self,
                  size: tuple[int, int] = (700, 700),
                  fps: int = 60,
-                 bg_img_path: str = r'Assets/Backgrounds/bg1.jpg',
+                 bg_img_path: str = r'Assets/Backgrounds/bg_9.jpg',
         ):
 
         init()
@@ -47,35 +51,23 @@ class App:
 
 
     def add_buttons(self):
-        close_btn = Button(self, self.screen, width=50, height=40, x=50, y=0, anchor=2, command=quit)
-        win_btn = Button(self, self.screen, width=50, height=40, x=100, y=0, anchor=2, command=self.win_max_min)
-        min_btn = Button(self, self.screen, width=50, height=40, x=150, y=0, anchor=2, command=self.minimize)
+        close_btn = Button(self, self.screen, width=50, height=40, x=50, y=0, anchor=2, command=quit, image_path=r'Assets\Buttons\close_btn_0.png')
+        win_btn = Button(self, self.screen, width=50, height=40, x=100, y=0, anchor=2, command=self.win_max_min, image_path=r'Assets\Buttons\maximize_btn_0.png')
+        min_btn = Button(self, self.screen, width=50, height=40, x=150, y=0, anchor=2, command=self.minimize, image_path=r'Assets\Buttons\minimize_btn_0.png')
 
     def add_title_bar(self):
-
-        class TitleBar(Frame):
-
-            def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
-
-            def on_drag(self, event):
-                pos = event.dict['pos']
-                pos2 = self.app.window.position
-                self.app.window.position = pos[0] + pos2[0] - self.drag_pos[0], pos[1] + pos2[1] -self.drag_pos[1]
-
         title_bar = TitleBar(
-            self, self.screen, width=lambda: self.width-150, height=lambda: 40, x=0, y=0, anchor=1, resizeable=True, events={'drag'}
+            self, self.screen, width=lambda: self.width-150, height=lambda: 40, x=0, y=0, anchor=1, resizeable=True
         )
 
-    def win_max_min(self):
-        print(self.size, self.desktop_size)
-        if self.size[0] < self.desktop_size[0]:
+    def win_max_min(self, spawn=(200, 100)):
+        if not self.is_maximized():
             self.size = self.desktop_size[0], self.desktop_size[1] - 1
             self.window.position = 0, 0
             self.screen = display.set_mode(self.size, NOFRAME)
         else:
             self.size = 700, 700
-            self.window.position = 200, 100
+            self.window.position = spawn
             self.screen = display.set_mode(self.size, NOFRAME)
 
         self.width, self.height = self.size
@@ -96,6 +88,9 @@ class App:
     def update(self):
         display.update(self.update_list)
         self.update_list.clear()
+        
+    def is_maximized(self):
+        return not self.size[0] < self.desktop_size[0]
 
     def run(self):
         display.flip()
