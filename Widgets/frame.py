@@ -1,6 +1,5 @@
 from Classes.widget import Widget
 from Classes.image import surface_blur
-from Widgets.label import Label
 
 
 class Frame(Widget):
@@ -25,7 +24,7 @@ class Frame(Widget):
         
 
     def init_surfaces(self):
-        self.default_surface = surface_blur(self.background_surface, radius=20, darken=0.7)
+        self.default_surface = surface_blur(self.background_surface, radius=5, darken=0.6)
         
 
     def blit(self, source, rect):

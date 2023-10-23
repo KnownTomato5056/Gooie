@@ -19,8 +19,8 @@ class TitleBar(Frame):
             x=0,
             y=0,
             anchor=1,
-            blur=20,
-            darken=0.7,
+            blur=5,
+            darken=0.6,
             image_path=self.image_path,
         )
 

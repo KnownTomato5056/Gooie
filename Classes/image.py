@@ -2,21 +2,19 @@ from PIL import Image
 from PIL.ImageFilter import BoxBlur
 from PIL.ImageEnhance import Brightness
 from pygame.image import fromstring, tobytes
-from math import ceil
+
+from pygame.image import load
+from pygame.transform import smoothscale_by
 
 
-def normalize_size(current: tuple, expected: tuple):
-    factor = max(expected[0] / current[0], expected[1] / current[1])
-    return (ceil(current[0] * factor), ceil(current[1] * factor))
+def normalize_factor(current: tuple, expected: tuple):
+    return  max(expected[0] / current[0], expected[1] / current[1])
 
 
 def convert_img(filepath: str, size: tuple):
-    img = Image.open(filepath)
-    img.thumbnail(normalize_size(img.size, size))
-    img = img.crop([0, 0, size[0], size[1]])
-    surf = fromstring(img.tobytes(), img.size, img.mode)
-    return surf.convert_alpha()
-
+    img = load(filepath)
+    factor = normalize_factor(img.get_size(), size)
+    return smoothscale_by(img, factor)
 
 
 def surface_blur(surface, radius=5, darken=1):
@@ -28,11 +26,6 @@ def surface_blur(surface, radius=5, darken=1):
     return fromstring(img.tobytes(), size, mode)
 
 
-def np_blur(surface, radius=5, darken=1):
-    size = surface.shape[:2]
-
-
 def blit_center(master, surface):
     coord = master.get_width() / 2, master.get_height() / 2
-    rect = surface.get_rect(center=coord)
-    master.blit(surface, rect)
+    master.blit(surface, surface.get_rect(center=coord))
