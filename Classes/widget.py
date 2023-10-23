@@ -16,8 +16,8 @@ class Widget:
 
         self.x = None
         self.y = None
-        self.anchor = anchor
         self.resizeable = resizeable
+        self.anchor = anchor
         self.rect = None
 
         if resizeable:
@@ -79,26 +79,26 @@ class Widget:
     def init_surfaces(self):
         self.default_surface = Surface((self.width, self.height))
 
-    def on_enter(self, event):
+    def on_enter(self):
         pass
 
-    def on_leave(self, event):
+    def on_leave(self):
         pass
 
-    def on_drag(self, event):
+    def on_drag(self):
         pass
 
-    def on_left_button_down(self, event):
+    def on_left_button_down(self):
         pass
 
-    def on_left_button_up(self, event):
+    def on_left_button_up(self):
         pass
 
-    def on_right_button_down(self, event):
+    def on_right_button_down(self):
         pass
 
-    def on_right_button_up(self, event):
+    def on_right_button_up(self):
         pass
 
-    def on_quit(self, event):
+    def on_quit(self):
         pass

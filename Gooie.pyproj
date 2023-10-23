@@ -29,6 +29,7 @@
     <Compile Include="Classes\widget.py" />
     <Compile Include="Gooie.py" />
     <Compile Include="Math\image_math.py" />
+    <Compile Include="test.py" />
     <Compile Include="Widgets\button.py" />
     <Compile Include="Widgets\frame.py" />
     <Compile Include="Widgets\label.py" />

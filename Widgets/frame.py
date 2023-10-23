@@ -20,7 +20,7 @@ class Frame(Widget):
         self.children = set()
 
         self.init_surfaces()
-        # This is the surface accessible to the children of this class
+        # This is the surface accessible to the children
         self.update(surface=self.default_surface)
         
 

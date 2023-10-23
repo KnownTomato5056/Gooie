@@ -9,7 +9,9 @@ class TitleBar(Frame):
         super().__init__(*args, **kwargs)
 
         self.time = time()
-        Label(
+        self.image_path = r"Assets\logo3.png"
+        
+        self.title_label = Label(
             self.app,
             self,
             width=100,
@@ -19,7 +21,7 @@ class TitleBar(Frame):
             anchor=1,
             blur=20,
             darken=0.7,
-            image_path=r"Assets\logo3.png",
+            image_path=self.image_path,
         )
 
     def on_drag(self, event):
