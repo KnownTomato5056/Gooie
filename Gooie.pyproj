@@ -26,11 +26,12 @@
     <Compile Include="Classes\eventhandler.py" />
     <Compile Include="Classes\image.py" />
     <Compile Include="Classes\memory.py" />
-    <Compile Include="Classes\widgets.py" />
+    <Compile Include="Classes\widget.py" />
     <Compile Include="Gooie.py" />
     <Compile Include="Math\image_math.py" />
     <Compile Include="Widgets\button.py" />
     <Compile Include="Widgets\frame.py" />
+    <Compile Include="Widgets\label.py" />
     <Compile Include="Widgets\titlebar.py" />
   </ItemGroup>
   <ItemGroup>

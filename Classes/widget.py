@@ -6,6 +6,9 @@ class Widget:
     def __init__(self, app, master, events, width, height, dx, dy, anchor, resizeable):
         self.app = app
         self.master = master
+        if type(self.master) != Surface: 
+            self.master.children.add(self)
+
         self.events = events
 
         self.dx = dx
@@ -34,26 +37,23 @@ class Widget:
         self.background_surface = self.get_background_surface()
         self.default_surface = Surface((self.width, self.height))
 
-        self.app.widgets.add(self)
+        self.app.widgets.append(self)
 
     def get_background_surface(self):
-        if type(self.master) == Surface:
-            return self.master.subsurface(self.rect).copy()
-        else:
-            return self.master.surface.subsurface(self.rect).copy()
+        return self.master.subsurface(self.rect).copy()
 
     def place(self, x, y, anchor=1):
         if anchor == 1 or anchor == 'top_left':
             self.x, self.y = x, y
 
         elif anchor == 2 or anchor == 'top_right':
-            self.x, self.y = self.app.width - x, y
+            self.x, self.y = self.master.get_width() - x, y
 
         elif anchor == 3 or anchor == 'bottom_right':
-            self.x, self.y = self.app.width - x, self.app.height - y
+            self.x, self.y = self.master.get_height() - x, self.master.get_height() - y
 
         elif anchor == 4 or anchor == 'bottom_left':
-            self.x, self.y = x, self.app.height - y
+            self.x, self.y = x, self.master.get_height() - y
 
         self.rect = Rect(self.x, self.y, self.width, self.height)
 
@@ -74,7 +74,7 @@ class Widget:
         if type(self.master) == Surface:
             self.app.update_list.append(rect)
         else:
-            self.master.update(rect)
+            self.master.child_update(rect)
 
     def init_surfaces(self):
         self.default_surface = Surface((self.width, self.height))

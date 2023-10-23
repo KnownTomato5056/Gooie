@@ -2,7 +2,7 @@ from Classes.image import convert_img
 from Classes.eventhandler import EventHandler
 from Widgets.button import Button
 from Widgets.titlebar import TitleBar
-from pygame import init, display, event, quit, NOFRAME
+from pygame import display, event, quit, NOFRAME
 from pygame.time import Clock
 from pygame._sdl2.video import Window
 from win32api import GetMonitorInfo, MonitorFromPoint
@@ -26,8 +26,6 @@ class App:
                  fps: int = 60,
                  bg_img_path: str = r'Assets/Backgrounds/bg_9.jpg',
         ):
-
-        init()
         self.size = size
         self.width, self.height = self.size
         self.screen = display.set_mode(size, NOFRAME)
@@ -37,7 +35,7 @@ class App:
         self.desktop_size = get_monitor_size()
         self.window = Window.from_display_module()
 
-        self.widgets = set()
+        self.widgets = []
         self.update_list = []
 
         self.bg_img_path = bg_img_path

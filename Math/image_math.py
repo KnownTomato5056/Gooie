@@ -1,12 +1,8 @@
-from re import A
 from numpy import ones, uint8, flip
-from PIL import Image
-from numba import njit
-from pygame.transform import scale, smoothscale
 from pygame.surfarray import pixels_alpha
+from pygame.transform import smoothscale
 
 
-@njit
 def generate_round_corner_mask(radius, curvature):
     arr = ones((radius, radius), dtype=uint8)*255
     for i in range(radius):

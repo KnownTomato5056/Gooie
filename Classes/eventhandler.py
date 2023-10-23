@@ -14,7 +14,7 @@ eid = {
     'right_button_up': {1026},
     'enter': {1024},
     'leave': {1024},
-    'drag': {1024, 1025, 1026}
+    'drag': {100, 1025, 1026}
 }
 
 widget_in_focus = None
@@ -38,7 +38,7 @@ def cache_events(widgets: list) -> dict:
 
 
 def handle_drag(event):
-    for widget in cache[1024].intersection(cache[1025]):
+    for widget in cache[100].intersection(cache[1025]):
         if widget.drag:
             widget.on_drag(event)
 

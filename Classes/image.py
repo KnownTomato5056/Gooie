@@ -2,7 +2,6 @@ from PIL import Image
 from PIL.ImageFilter import BoxBlur
 from PIL.ImageEnhance import Brightness
 from pygame.image import fromstring, tobytes
-from pygame.surface import Surface
 from math import ceil
 
 
